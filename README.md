@@ -1,4 +1,4 @@
-PRPG
+<h1 align="center">PRPG</h1>
 
 Current version: 0.0.2
 
@@ -15,14 +15,14 @@ INSTALLING:
 git clone https://github.com/username/project-name.git
 cd project-name
 ```
-2.Install venv
+2. Install venv
 ```bash
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
 # or
 venv\Scripts\activate     # Windows
 ```
-3. Install dependecies
+3.  dependecies
 ``` bash
 pip install -r requirements.txt
 ```

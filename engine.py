@@ -1,5 +1,7 @@
+import items
 from player import *
 from monsters import *
+from items import *
 import time
 import random
 
@@ -11,21 +13,55 @@ def debug_menu(player: Player):
         print(f'Loading player...')
         print("""DEBUG! Select an option:
         1. Add item
-        2. Get all itmes
+        2. Get all items
         3. Get item
         q. Quit""")
 
         option = input('Select an option: ')
         match option:
             case '1':
-                player.add_item({'name': 'Sword', 'type':'Weapon'})
+                player.add_item(items.get_item(1))
             case '2':
-                print(player.get_all_items())
+                if player.get_all_items():
+                    print(player.get_all_items())
+                else:
+                    print("Your bag is empty...")
             case '3':
-                option = input('What item would you choose?')
-                print(player.get_item(int(option)))
+                if player.get_all_items():
+                    option = input('What item would you choose?')
+                    print(player.get_item(int(option)))
+                else:
+                    print("Your bag is empty...")
             case 'q':
                 break
+
+def inventory_menu(player: Player):
+    print("Let's see, what in your bag...")
+    while True:
+        all_items = player.get_all_items()
+        if not all_items:
+            print("Your bag is empty...")
+            break
+        print("""Select an option:
+    1. View all items
+    2. Use item
+    3. Close bag""")
+        option = input('Select an option: ')
+        match option:
+            case '1':
+                print(all_items)
+            case '2':
+                option = input('What item would you choose?')
+                if option == '':
+                    print('Something went wrong... Try again')
+                    return
+                player.use_item(int(option))
+            case '3':
+                break
+            case _:
+                print('Sorry, I don\'t understand that')
+                continue
+
 
 def delayed_print(text, delayed=0.5):
     print(text)
@@ -161,7 +197,7 @@ def main_game(player):
             case "2":
                 print('Shop is closed right now...')
             case "3":
-                print("Your inventory is empty...")
+                inventory_menu(player)
             case "4":
                 dungeon_entering(player)
             case "5":

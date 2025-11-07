@@ -72,6 +72,15 @@ class Player:
     def get_item(self, index):
         return self.__inventory.get_item(index)
 
+    def use_item(self, index):
+        if self.__inventory.get_item(index) is None:
+            print('There is no item')
+            return
+
+        if self.__inventory.get_item(index)['type'] == 'consumable':
+            print(f"You have used {self.__inventory.get_item(index)['name']}")
+            self.__inventory.remove_item(index)
+
     def get_info(self):
-        print(f"""\033[97;1m Name: {self.__name} \033[0m, \033[97;43;1m LVL: {self.__lvl} \033[0m, \033[97;44;1m Race: {self.__race} \033[0m, \033[97;41;1m Attack: {self.__attack_str} \033[0m. \033[97;42;1m Current hp: {self.__hp} \033[0m,\033[97;45;1m EXP: {self.__exp} \033[0m (need \033[97;35;1m{(self.__lvl * 5) - self.__exp} \033[0mEXP to level up)
+        print(f"""\033[97;1mName: {self.__name} \033[0m, \033[97;43;1m LVL: {self.__lvl} \033[0m, \033[97;44;1m Race: {self.__race} \033[0m, \033[97;41;1m Attack: {self.__attack_str} \033[0m. \033[97;42;1m Current hp: {self.__hp} \033[0m,\033[97;45;1m EXP: {self.__exp} \033[0m (need \033[97;35;1m{(self.__lvl * 5) - self.__exp} \033[0mEXP to level up)
 \033[3mReady for adventures...\033[0m\n""")

@@ -1,17 +1,20 @@
 class Inventory:
 
-    __items = []
-
     def __init__(self):
+        self.__items = []
         print('Inventory is created')
 
     def get_all_items(self):
         if not self.__items:
             return None
-        names = []
-        for item in self.__items:
-            names.append(item['name'])
-        return names
+        result = []
+        for i, item in enumerate(self.__items, 1):
+            if item.get('quantity', 1) > 1:
+                result.append(f"{i}. {item['name']} (x{item['quantity']})")
+            else:
+                result.append(f"{i}. {item['name']}")
+
+        return "\n".join(result)
 
     def get_item(self, index):
         try:
