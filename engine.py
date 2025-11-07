@@ -35,29 +35,27 @@ def moving_in_dungeon():
     delayed_print("""There is two ways, where you can go... What would you choose?
             1. Turn left
             2. Turn right
-            3. Exit the dungeon""")
+            3. Exit the dungeon
+            4. Get my info""")
     result = input('Your option: ')
     return result
 
 def check_player_lvlup(player):
     if player.exp >= player.lvl * 5:
-        player.lvl = 1
-        player.exp = 0
-        player.max_hp = player.lvl * 5
-        player.hp = player.max_hp
+        player.level_up()
         print(f"Congratulations, your level is up! Now it's\033[97;43;1m {player.lvl} \033[0mlevel.")
 
 def check_win_condition(monster: Monster, player: Player):
     if monster.hp <= 0:
         delayed_print(f"The \033[97;47;1m {monster.get_name()} \033[0m is defeated!", 1)
         delayed_print(f"You get an {monster.get_lvl() + monster.get_max_hp()} EXP!")
-        player.exp = monster.get_lvl() + monster.get_max_hp()
+        player.add_exp(monster.get_lvl() + monster.get_max_hp())
         check_player_lvlup(player)
         return True
     elif player.hp <= 0:
         delayed_print(f"Oh! The \033[97;47;1m {monster.get_name()} \033[0m is defeat you!", 1)
         delayed_print("Return into the village...")
-        player.hp = player.max_hp
+        player.healing(player.max_hp)
         return True
     else:
         return False
@@ -86,7 +84,7 @@ def battle_start(player: Player):
                 case '2':
                     monster.get_info()
                 case '3':
-                    delayed_print('You are running with shame from the dungeon...', 1)
+                    delayed_print('You are running with shame from the monster...', 1)
                     del monster
                     break
                 case _:
@@ -141,6 +139,8 @@ def dungeon_entering(player):
         elif option == '3':
             delayed_print('Returning to the village...')
             return
+        elif option == '4':
+            print(player.get_info())
         else:
             print('Failed to enter the dungeon. Try again...\n')
 

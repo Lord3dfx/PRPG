@@ -5,12 +5,6 @@ secondname = ['Goblin', 'Orc', 'Evileye', 'Wurm', 'Gnoll', 'Spider', 'Bat']
 
 class Monster:
 
-    __lvl = 0
-    __atk = 0
-    __hp = 0
-    __max_hp = 0
-    __name = ''
-
     def __init__(self, player):
         self.__name = firstname[random.randint(0, len(firstname)-1)] + ' ' + secondname[random.randint(0, len(secondname)-1)]
         self.__lvl = random.randint(player.lvl, player.lvl + 1)
@@ -41,4 +35,4 @@ class Monster:
         self.__hp = value
 
     def get_info(self):
-        print(f"""\033[97;47;1mName: {self.__name}\033[0m, \033[97;43;1mlvl: {self.__lvl}\033[0m, \033[97;41;1mattack: {self.__atk}\033[0m. \033[97;42;1mCurrent hp: {self.__hp}\033[0m""")
+        print(f"""\033[97;1mName: {self.__name}\033[0m, \033[97;43;1mlvl: {self.__lvl}\033[0m, \033[97;41;1mattack: {self.__atk}\033[0m. \033[97;42;1mCurrent hp: {self.__hp}\033[0m""")
