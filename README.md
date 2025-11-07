@@ -12,8 +12,8 @@ INSTALLING:
 
 1. Clone repository:
 ```bash
-git clone https://github.com/username/project-name.git
-cd project-name
+git clone https://github.com/Lord3dfx/PRPG
+cd PRPG
 ```
 2. Install venv
 ```bash
