@@ -24,6 +24,9 @@ class Inventory:
             return None
 
     def add_item(self, item):
+        if len(self.__items) >= 6:
+            return False
+
         if item.get('stackable', True):
             for is_exist in self.__items:
                 if is_exist.get('name') == item['name']:

@@ -20,6 +20,9 @@ class Player:
         self.__update()
         self.__hp = self.__max_hp
 
+    def restore(self):
+        self.__hp = self.__max_hp
+
     def check_player_lvlup(self):
         if self.exp >= self.lvl * 5:
             self.level_up()
@@ -81,7 +84,7 @@ class Player:
         return self.__max_hp
 
     def add_item(self, item):
-        self.__inventory.add_item(item)
+        return self.__inventory.add_item(item)
 
     def get_all_items(self):
         return self.__inventory.get_all_items()
