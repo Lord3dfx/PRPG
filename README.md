@@ -1,6 +1,6 @@
 PRPG
 
-Current version: 0.0.1
+Current version: 0.0.2
 
 This is a pet project I'm working on for fun.
 
@@ -37,6 +37,11 @@ python main.py
 - Fighting monsters
 - Gaining XP and leveling up
 - Debug menu (will be disabled in future versions)
+
+## What's in v0.0.2:
+- Reworked Player's class
+- Correct leveling for player
+- Fixed some minor bugs  
 
 ## Planned for v0.1:
 - Dungeon generator
