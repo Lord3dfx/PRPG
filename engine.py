@@ -30,10 +30,10 @@ def create_player():
     while True:
         name = input("Enter your name: ")
         race = input("""Select your race:
-        1. Human
-        2. Dwarf
-        3. Elf
-        """)
+            1. Human
+            2. Dwarf
+            3. Elf
+""")
         if race not in "123" or race == '':
             print("Failed to create character. Try again...\n")
             continue
@@ -83,14 +83,15 @@ def battle_start(monster, player):
                 case '1':
                     print('BAM!!!')
                     monster.hp = monster.hp - player.attack
-                    Dungeon.delayed_print(f"You deal \033[97;41;1m {player.attack} \033[0mHP to the monster!")
+                    Dungeon.delayed_print(f"You deal \033[97;41;1m {player.attack} \033[0mHP to the monster! Monster hp is \033[97;42;1m {monster.hp} \033[0m")
                     if check_win_condition(monster, player):
-                        break
+                        return True
                     turn = 'monster'
                 case '2':
                     monster.get_info()
                 case '3':
                     Dungeon.delayed_print('You are running with shame from the monster...', 1)
+                    player.take_damage(monster.get_atk())
                     del monster
                     return True
                 case _:
@@ -101,8 +102,7 @@ def battle_start(monster, player):
             player.take_damage(monster.get_atk())
             if check_win_condition(monster, player):
                 return False
-            Dungeon.delayed_print(
-                f"He's kicked you on \033[97;41;1m {monster.get_atk()} \033[0m HP!. Your HP is {player.hp}", 1)
+            Dungeon.delayed_print(f"He's kicked you on \033[97;41;1m {monster.get_atk()} \033[0m HP!. Your HP is \033[97;42;1m {player.hp} \033[0m", 1)
             turn = 'player'
     return True
 
@@ -118,8 +118,16 @@ def check_win_condition(monster, player):
         Dungeon.delayed_print("Return into the village...")
         player.restore()
         return True
-    else:
-        return False
+    return False
+
+def player_is_dead(player):
+    from dungeon import Dungeon
+    if player.hp <= 0:
+        Dungeon.delayed_print(f"Oops! It seems like you died!", 1)
+        Dungeon.delayed_print("Return into the village...")
+        player.restore()
+        return True
+    return False
 
 def dungeon_entering(player):
     from dungeon import Dungeon

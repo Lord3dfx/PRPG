@@ -1,5 +1,5 @@
 from monsters import Monster
-from engine import inventory_menu, battle_start
+from engine import inventory_menu, battle_start, player_is_dead
 import textbase
 import random
 import items
@@ -44,10 +44,8 @@ class Dungeon:
                     self.generate_chest()
                 case 3:
                     self.generate_monster()
-        print('***Dungeon builded...')
 
     def react_to_choice(self, event, monster_number):
-        print(event)
         if event == 'chest':
             item = items.get_consumable_item(random.randint(1, 6))
             print(f'You get a \033[106;1m {item['name']} \033[0m')
@@ -57,14 +55,26 @@ class Dungeon:
             item = items.get_consumable_item(random.randint(1, 6))
             self.player.add_item(item)
             self.player.take_damage(2)
+            result = player_is_dead(self.player)
+            if result:
+                return 'Player_dead'
             print(f"Oh, it was mimic! You got \033[106;1m {item['name']} \033[0m and \033[97;41;1m 2 \033[0m damage!")
             return True
         elif event == 'trap':
             print(f"You stuck in trap! You got \033[97;41;1m 4 \033[0m damage!")
             self.player.take_damage(4)
+            result = player_is_dead(self.player)
+
+            if result:
+                return 'Player_dead'
+
             return True
         elif event == 'monster':
-            battle_start(self.monster[monster_number-1], self.player)
+            result = battle_start(self.monster[monster_number-1], self.player)
+
+            if not result:
+                return 'Player_dead'
+
             return True
         elif event == 'next':
             return False
@@ -77,7 +87,7 @@ class Dungeon:
     @staticmethod
     def print_list_menu(list_menu, option_number):
         for item in list_menu:
-            print(f'{option_number}. {item}')
+            print(f'    {option_number}. {item}')
             option_number += 1
 
     def dungeon_menu(self):
@@ -97,7 +107,7 @@ class Dungeon:
                     elif event['type'] == 'monster':
                         self.monster.append(Monster(self.player))
                         monster_number += 1
-                        list_menu.append(f'\033[97;1m{self.monster[monster_number-1].get_name()} \033[0m is here and he is \033[97;43;1m {self.monster[monster_number-1].get_lvl()} \033[0m LVL!')
+                        list_menu.append(f'\033[97;1m{self.monster[monster_number-1].get_name()} \033[0mis here and he is \033[97;43;1m {self.monster[monster_number-1].get_lvl()} \033[0m LVL!')
 
             monster_number = 0
 
@@ -105,27 +115,37 @@ class Dungeon:
                 has_monsters = any(event.get('type') == 'monster' for event in self.events)
 
                 if not has_monsters:
-                    self.events.append({'type': 'next'})
-                    list_menu.append('Going to the next room...')
+                    if not any(event.get('type') == 'next' for event in self.events):
+                        self.events.append({'type': 'next'})
+                        list_menu.append('Going to the next room...')
 
                 print(f'\033[3m{room_name}\033[0m')
                 self.print_list_menu(list_menu, 1)
-                print("'e' for leaving dungeon")
-                print("'i' for open inventory")
+                print("    'e' for leaving dungeon")
+                print("    'i' for open inventory")
+                print("    's' for your stats")
                 option = input('Your choice: ')
 
                 if option == 'e':
+                    self.delayed_print('Return to village...')
                     return False
                 if option == 'i':
                     inventory_menu(self.player)
                     continue
+                if option == 's':
+                    self.player.get_info()
+                    continue
 
                 result = self.react_to_choice(self.events[int(option)-1]['type'], monster_number)
+
+                if result == 'Player_dead':
+                    return False
 
                 if result:
                     self.events.pop(int(option)-1)
                     list_menu.pop(int(option)-1)
                     continue
+
                 else:
                     list_menu = []
                     self.clear_events()

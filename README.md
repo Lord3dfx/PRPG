@@ -1,6 +1,6 @@
 <h1 align="center">PRPG</h1>
 
-Current version: 0.0.2
+Current version: 0.0.3
 
 This is a pet project I'm working on for fun.
 
@@ -30,6 +30,20 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
+# Planned for v0.1:
+- Dungeon generator
+- Inventory and equipment system
+- Usable and equipable items
+
+## What's in v0.0.3:
+- Upgrade dungeon generation, now it's may have from 1 to 5 options
+- Now added some traps and mimic chests in dungeon, be careful
+- Fixed some minor and major bugs
+
+## What's in v0.0.2:
+- Reworked Player's class
+- Correct leveling for player
+- Fixed some minor bugs  
 
 ## What's in v0.0.1:
 - Player creation with name and race selection
@@ -38,12 +52,3 @@ python main.py
 - Gaining XP and leveling up
 - Debug menu (will be disabled in future versions)
 
-## What's in v0.0.2:
-- Reworked Player's class
-- Correct leveling for player
-- Fixed some minor bugs  
-
-## Planned for v0.1:
-- Dungeon generator
-- Inventory and equipment system
-- Usable and equippable items
