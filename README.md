@@ -11,7 +11,7 @@ INSTALLING:
 
 1. Clone repository:
 ```bash
-git clone https://github.com/Lord3dfx/PRPG
+git clone https://github.com/Lord3dfx/PyRPG
 cd PRPG
 ```
 2. Install venv
