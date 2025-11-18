@@ -1,10 +1,9 @@
 <h1 align="center">PyRPG</h1>
 
-Current version: 0.0.3
+
+### Current version: 0.1.0
 
 This is a pet project I'm working on for fun.
-
-It currently has basic features like character creation, monster battles, and more.
 
 Updates will be coming soon!
 
@@ -30,10 +29,21 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
-# Planned for v0.1:
-- Dungeon generator
-- Inventory and equipment system
-- Usable and equipable items
+# Planned for v0.2:
+Now it's time to focus on improving the game. Many bugs are due to my lack of experience in programming, so they will disappear over time.
+
+In version 0.2, I plan to add more items (consumables, equipable items, artifacts), more unique monsters, more battle variety, and, of course, classes and races. But first of all, I will still focus on fixing bugs. 
+
+## What's in v0.1.0:
+- Added equipment for player! The only way to add equipable item is still debug menu, but soon they will be added as loot
+- Added bonus stats for player. They calculate from equipable items
+- Added armor for player. Now, monster damage is reduced by the player's armor amount.
+- Now, if you die in the dungeon, you will lose all of your items
+- Fixed bug with items' stacking
+- Fixed bug with player HP, when it was below zero and player was still alive
+- Fixed bugs with monsters' damage
+- Rework "player's dead" function
+- fixed some minor bugs
 
 ## What's in v0.0.3:
 - Upgrade dungeon generation, now it's may have from 1 to 5 options

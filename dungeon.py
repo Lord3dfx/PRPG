@@ -10,6 +10,10 @@ class Dungeon:
         self.player = player
         self.monster = []
         self.events = []
+
+    def __del__(self):
+        print('Dungeon is deleted!')
+
     @staticmethod
     def delayed_print(text, delayed=0.5):
         print(text)
@@ -54,16 +58,16 @@ class Dungeon:
         elif event == 'chest_mimic':
             item = items.get_consumable_item(random.randint(1, 6))
             self.player.add_item(item)
-            self.player.take_damage(2)
-            result = player_is_dead(self.player)
+            self.player.take_true_damage(2)
+            result = self.player.hp <= 0
+            print(f"Oh, it was mimic! You got \033[106;1m {item['name']} \033[0m and \033[97;41;1m 2 \033[0m damage!")
             if result:
                 return 'Player_dead'
-            print(f"Oh, it was mimic! You got \033[106;1m {item['name']} \033[0m and \033[97;41;1m 2 \033[0m damage!")
             return True
         elif event == 'trap':
             print(f"You stuck in trap! You got \033[97;41;1m 4 \033[0m damage!")
-            self.player.take_damage(4)
-            result = player_is_dead(self.player)
+            self.player.take_true_damage(4)
+            result = self.player.hp <= 0
 
             if result:
                 return 'Player_dead'
@@ -139,6 +143,7 @@ class Dungeon:
                 result = self.react_to_choice(self.events[int(option)-1]['type'], monster_number)
 
                 if result == 'Player_dead':
+                    player_is_dead(self.player)
                     return False
 
                 if result:

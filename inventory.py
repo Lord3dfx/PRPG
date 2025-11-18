@@ -56,3 +56,12 @@ class Inventory:
         effect = self.__items[index-1].get('stats')
         return effect
 
+    def drop_all_items(self):
+        count = 0
+        for item in self.__items:
+            if item.get('quantity', 1) > 1:
+                count += item['quantity']
+            else:
+                count += 1
+        self.__items = []
+        return count
